@@ -1,0 +1,8 @@
+{
+  "app": {
+    "name": "Hide Field",
+    "short_description": "Hide Assignee ticket form field when user's role is light_agent.",
+    "long_description": "Hide Assignee ticket form field when user's role is light_agent.",
+    "installation_instructions": "* Click Install."
+  }
+}

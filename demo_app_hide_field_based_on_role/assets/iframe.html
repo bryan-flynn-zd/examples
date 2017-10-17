@@ -1,0 +1,20 @@
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <h2>Hide Ticket Field</h2>
+  <p>If users's role is light_agent, Assignee field is hidden.</p>
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script>
+    var client = ZAFClient.init();
+    client.invoke('resize', { width: '100%', height: '120px' });
+    client.get('currentUser.role').then( (data) => {
+      console.dir(data);
+      if (data["currentUser.role"] === "light_agent") {
+        client.invoke("ticketFields:assignee.hide");
+      }
+    });
+  </script>
+</body>
+</html>
