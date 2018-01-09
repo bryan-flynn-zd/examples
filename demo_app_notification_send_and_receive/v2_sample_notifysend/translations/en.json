@@ -1,0 +1,7 @@
+{
+  "app": {
+    "short_description": "Demo of how to *send* a notification event.",
+    "long_description": "This is a very simple sample that demonstrates  \nhow to set up and send a Notify.json REST API call event.",
+    "installation_instructions": "Simply click Install."
+  }
+}

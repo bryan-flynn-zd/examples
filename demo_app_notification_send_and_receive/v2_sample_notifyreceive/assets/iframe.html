@@ -1,0 +1,44 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Feel free to use Zendesk Garden styles in your own code.
+  These style classes were taken from the Bedrock and CSS sections at
+  http://garden.zendesk.com
+  -->
+  <link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/1/zendesk_garden.css" type="text/css">
+  <!-- Going to use JQuery to handle form events and updates. -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  <!-- Feel free to use Zendesk Garden styles in your own code.
+    These style classes were taken from the Bedrock and CSS sections at
+    http://garden.zendesk.com
+  -->  
+  <p id="messageOutput" class="u-zeta u-light">(no messages yet)</p>
+
+  <!-- The Zendesk App Client SDK is open sourced. Check it out:
+  https://github.com/zendesk/zendesk_app_framework_sdk -->
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+
+  <script>
+
+    // Initialise the Zendesk JavaScript API client. This is what allows 
+    // your iFramed app to talk back and forth with the main Zendesk UI.
+    // See https://developer.zendesk.com/apps/docs/apps-v2
+    var client = ZAFClient.init();
+
+    // Size the app's window.
+    client.invoke('resize', { width: '100%', height: '100px' });
+
+    // This displays the received notification.
+    function handleNotification(event) {
+      console.log("notification:", event);
+      $("#messageOutput").text(JSON.stringify(event));
+    }
+
+    // This creates a listener for the event 'notification.my_custom_notify_event_name'
+    client.on('notification.my_custom_notify_event_name', (data) => handleNotification(data));
+
+  </script>
+</body>
+</html>

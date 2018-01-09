@@ -1,0 +1,66 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- See http://garden.zendesk.com for details on Zendesk Garden CSS styles. -->
+  <link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/1/zendesk_garden.css" type="text/css">
+  <!-- Going to use JQuery to handle form events and updates. -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  <!-- Feel free to use Zendesk Garden styles in your own code.
+  These style classes were taken from the Bedrock and CSS sections at
+  http://garden.zendesk.com
+  -->
+  <h2 class="u-gamma u-light">
+  Send a notification and associated data to another app.
+  </h2>
+  <br/>
+  <button id="sendNotify" class="c-btn c-btn--small c-btn--pill c-btn--primary">Send</button>
+
+  <!-- The Zendesk App Client SDK is open sourced. Check it out:
+  https://github.com/zendesk/zendesk_app_framework_sdk -->
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+
+  <script>
+    // Initialise the Zendesk JavaScript API client. This is what allows 
+    // your iFramed app to talk back and forth with the main Zendesk UI.
+    // See https://developer.zendesk.com/apps/docs/apps-v2
+    var client = ZAFClient.init();
+
+    // Size the app's window.
+    client.invoke('resize', { width: '100%', height: '100px' });
+
+    // Does the work of sending a notification message from this app to another app.
+    function sendNotification() {
+      // Replace app_id and agent_id (optional) with your own Zendesk specific IDs.
+      // See https://developer.zendesk.com/rest_api/docs/core/apps#send-notification-to-app for Notify API details.
+      var clientNotificationRequestSettings = {
+        url: '/api/v2/apps/notify.json',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          // app_id: The other app's ID.
+          // See https://<yoursubdomain>.zendesk.com/api/v2/apps.json for all app IDs.
+          app_id: 129581,
+          // event: Used by receiving app to identify event. Notify event listeners are
+          // prefixed with 'notifiation.' -- example from the app receiver side:
+          // client.on('notification.my_custom_notify_event_name', (data) => handleNotification(data));
+          event: 'my_custom_notify_event_name',
+          // body: Put whatever JSON object you want here.
+          body: {my_notificaiton_id: 12345, my_notification_msg: 'Date is currently: ' + Date()},
+          // agent_id: optional -- if you don't specify it, the notification goes to all agents.
+          agent_id: 6717174888
+        })
+      };
+
+      client.request(clientNotificationRequestSettings);
+    }
+
+    // Set up the button click event after the form loads.
+    $(document).ready(function(){
+      $("#sendNotify").click(() => sendNotification());
+    });
+
+  </script>
+</body>
+</html>
