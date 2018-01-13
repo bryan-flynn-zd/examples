@@ -47,19 +47,24 @@
           // client.on('notification.my_custom_notify_event_name', (data) => handleNotification(data));
           event: 'my_custom_notify_event_name',
           // body: Put whatever JSON object you want here.
-          body: {my_notificaiton_id: 12345, my_notification_msg: 'Date is currently: ' + Date()},
-          // agent_id: optional -- if you don't specify it, the notification goes to all agents.
-          agent_id: 6717174888
+          body: {
+                  my_notificaiton_id: 12345, 
+                  my_notification_msg: 'Date is currently: ' + Date()},
+                  // agent_id: optional -- if you don't specify it, the notification goes to all agents.
+                  agent_id: 6717174888,
+                  ticketId: ticketId
         })
       };
-
       client.request(clientNotificationRequestSettings);
     }
 
     // Set up the button click event after the form loads.
     $(document).ready(function(){
       $("#sendNotify").on("click", function(){
-        sendNotification();
+        client.get("ticket.id").then(function(successData){
+          var ticketId = successData["ticket.id"];
+          sendNotification(ticketId);
+        });
       });
     });     
 

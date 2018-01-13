@@ -32,8 +32,14 @@
 
     // This displays the received notification.
     function handleNotification(event) {
-      console.log("notification:", event);
-      $("#messageOutput").text(JSON.stringify(event));
+      
+      client.get("ticket.id").then(function(successData){
+        if (successData["ticket.id"] == event.ticketId)
+        {
+          console.log("notification:", event);
+          $("#messageOutput").text(JSON.stringify(event));
+        }
+      });
     }
 
     // This creates a listener for the event 'notification.my_custom_notify_event_name'
