@@ -31,7 +31,7 @@
     client.invoke('resize', { width: '100%', height: '100px' });
 
     // Does the work of sending a notification message from this app to another app.
-    function sendNotification() {
+    function sendNotification(ticketId) {
       // Replace app_id and agent_id (optional) with your own Zendesk specific IDs.
       // See https://developer.zendesk.com/rest_api/docs/core/apps#send-notification-to-app for Notify API details.
       var clientNotificationRequestSettings = {
