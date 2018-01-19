@@ -1,0 +1,8 @@
+{
+  "app": {
+    "name": "Hide Sharing Field",
+    "short_description": "Hide Sharing ticket form field when 'disablesharing' tag exists on user.",
+    "long_description": "Hide Sharing ticket form field when disablesharing tag exists on user.",
+    "installation_instructions": "* Click Install. \n* Add 'disablesharing' tag to users who don't need access to Sharing field."
+  }
+}
