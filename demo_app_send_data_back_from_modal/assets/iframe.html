@@ -1,0 +1,62 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Zendesk CSS styles -->
+  <link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/2/zendesk_garden.css" type="text/css">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+  <h2 class="u-gamma u-light">Select Ticket Tags On Modal</h2><br/>
+  <button id="displayModal" class="c-btn c-btn--small c-btn--pill c-btn--primary">Display Modal</button>
+  <br/>
+  <div id="modalData"></div>
+  <!-- zaf_sdk.js is what allows this iFramed JavaScript app to communicate out to the parent/agent UI. -->
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script>
+    var client = ZAFClient.init();
+    client.invoke('resize', { width: '100%', height: '200px' });
+
+    function displayModal() {
+      return client.invoke('instances.create', {
+        location: 'modal',
+        url: 'assets/modal.html'
+      }).then(function(data) {
+        var instanceGuid = data['instances.create'][0].instanceGuid;
+        var modalClient = client.instance(instanceGuid);
+
+        // Send modal this client's instance guid via trigger data.
+        // The modal will use the guid to get a client instance back to this parent.
+        // A delay is needed for modal to be instantiated for trigger receiver to be set up.
+        sleep(500).then(() => {
+          modalClient.trigger('sending_parent_client_guid', client._instanceGuid);
+        });
+      });
+    }
+
+    function addTagsToTicket(tagArray) {
+      client.invoke('ticket.tags.add', tagArray);
+    }
+
+    // Utility function.
+    function sleep(time) {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    }
+
+    // Get data back from modal via trigger data.
+    // Look for this line in modal.html: parentClient.trigger('sending_modal_data', JSON.stringify(tagsToAdd));
+    client.on('sending_modal_data', (modalData) => {
+      console.debug('sending_modal_data event called...');
+      console.debug(modalData);
+      // Assume data in array format.
+      let tagArray = JSON.parse(modalData);
+      console.debug("tagArray:", tagArray);
+      $("#modalData").html($("#modalData").html() + "<br/>" + modalData);
+      addTagsToTicket(tagArray);
+    });
+
+    $(document).ready(function(){
+      $("#displayModal").click(() => displayModal());
+    });
+  </script>
+</body>
+</html>

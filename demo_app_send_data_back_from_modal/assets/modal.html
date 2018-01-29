@@ -1,0 +1,58 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/2/zendesk_garden.css" type="text/css">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+  <h2 class="u-gamma u-light">Select tags to add to ticket</h2>
+  <hr/>
+  <div id="container">
+    <label><input id="tag1" class="c-chk__label" type="checkbox"/>Include tag1?</label><br/>
+    <label><input id="tag2" class="c-chk" type="checkbox"/>Include tag2?</label><br/>
+    <label><input id="tag3" class="c-chk" type="checkbox"/>Include tag3?</label><br/>
+    <button id="addTagsToTicketAndClose" class="c-btn c-btn--small c-btn--pill c-btn--primary">Add Tags</button>
+    <button id="closeNoSend" class="c-btn c-btn--small c-btn--pill">No Change</button>
+  </div>
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script>
+    let modalClient = ZAFClient.init();
+    let parentClient = null;
+
+    modalClient.on('sending_parent_client_guid', (parentClientGuid) => {
+      console.debug('Receiving parent guid...', parentClientGuid);
+      parentClient = modalClient.instance(parentClientGuid);
+    });
+
+    // Resize model to be 40% of parent window.
+    modalClient.invoke('resize', { width: '40vw', height: '40vh' });
+
+    // Use if an action is needed when user clicks 'X' or clicks outside of modal.
+    // modalClient.on('modal.close', () => {
+    //   console.debug("on modal.close called...");
+    //   // ...tbd
+    // });
+
+    function sendDataToParentAndClose() {
+      console.debug("sendDataToParentAndClose called...");
+      let tagsToAdd = [];
+      $('#tag1').is(':checked') ? tagsToAdd.push('tag1') : null;
+      $('#tag2').is(':checked') ? tagsToAdd.push('tag2') : null;
+      $('#tag3').is(':checked') ? tagsToAdd.push('tag3') : null;
+      parentClient.trigger('sending_modal_data', JSON.stringify(tagsToAdd));
+      modalClient.invoke('destroy');
+    }
+
+    function closeDontChange() {
+      console.debug("closeDontChange called...");
+      modalClient.invoke('destroy');
+    }
+
+    $(document).ready(function(){
+      $("#addTagsToTicketAndClose").click(() => sendDataToParentAndClose());
+      $("#closeNoSend").click(() => closeDontChange());
+    });
+
+  </script>
+ </body>
+ </html>
