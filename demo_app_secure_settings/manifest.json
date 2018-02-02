@@ -1,0 +1,32 @@
+{
+  "name": "Sample Secure Setting App",
+  "author": {
+    "name": "S. Sample",
+    "email": "ssample@example.com",
+    "url": ""
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "domainWhitelist": ["httpbin.org"],
+  "location": {
+    "support": {
+      "ticket_sidebar": "assets/iframe.html"
+    }
+  },
+  "parameters": [
+    {
+      "name": "token",
+      "type": "text",
+      "secure": true,
+      "default": "123456789a123456789b123456789c"
+    },
+    {
+      "name": "subdomain",
+      "type": "text",
+      "secure": true,
+      "default": "thisismyreallylongsubdomain"
+    }
+  ],
+  "version": "1.0",
+  "frameworkVersion": "2.0"
+}
