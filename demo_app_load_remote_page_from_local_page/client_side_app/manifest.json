@@ -1,0 +1,35 @@
+{
+  "name": "Load Remote From Local",
+  "author": {
+    "name": "Bryan Flynn",
+    "email": "bflynn@zendesk.com",
+    "url": ""
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "parameters": [
+    {
+      "name": "TopBarApp_URL",
+      "type": "text",
+      "default": "http://localhost:8080/remote_top_bar.html"
+    },
+    {
+      "name": "TicketApp_URL",
+      "type": "text",
+      "default": "http://localhost:8080/remote_ticket_bar.html"
+    }
+  ],
+  "location": {
+    "support": {
+      "top_bar": {
+        "url": "assets/top_bar.html",
+        "autoLoad": true
+      },
+      "ticket_sidebar": {
+        "url": "assets/ticket_bar.html"
+      }
+    }
+  },
+  "version": "1.0",
+  "frameworkVersion": "2.0"
+}

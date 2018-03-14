@@ -1,0 +1,39 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/1/zendesk_garden.css" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  <h2 class="u-gamma u-light">
+    Ticket Sidebar App
+  </h2>
+  <p id="messageOutput" class="u-zeta u-light"></p>
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script>
+
+    var client = ZAFClient.init();
+    client.invoke('resize', { width: '100%', height: '200px' });
+
+    // Get URL to redirect to and pass along the 'origin' and 'app_guid' settings, which are necessary to communicate to ZAF
+    var redirectURL;
+    client.metadata().then( (metadata) => {
+        console.dir(metadata);
+        redirectURL = `${metadata.settings.TicketApp_URL}?origin=${client._origin}&app_guid=${client._appGuid}`;
+    });
+
+    function redirectToRemote() {
+      window.location.assign(redirectURL);      
+    }
+
+    function doStuff() {
+      console.log("Doing stuff...");
+      $("#messageOutput").text("Redirecting to remote location...");
+      setTimeout(redirectToRemote, 2000);
+    }
+
+    client.on('app.registered', doStuff() );
+
+  </script>
+</body>
+</html>
