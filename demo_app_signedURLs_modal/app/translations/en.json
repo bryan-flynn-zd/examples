@@ -1,0 +1,8 @@
+{
+  "app": {
+    "name": "Server-side Modal Demo",
+    "short_description": "Demo server-side ticket_sidebar app displaying a server-side modal.",
+    "long_description": "Demo server-side ticket_sidebar app displaying a server-side modal.",
+    "installation_instructions": "Click install."
+  }
+}
