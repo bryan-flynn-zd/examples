@@ -18,13 +18,13 @@
       "name": "token",
       "type": "text",
       "secure": true,
-      "default": "123456789a123456789b123456789c"
+      "default": "12345"
     },
     {
       "name": "subdomain",
       "type": "text",
       "secure": true,
-      "default": "thisismyreallylongsubdomain"
+      "default": "xyz"
     }
   ],
   "version": "1.0",

@@ -7,7 +7,7 @@ A simple app that creates two secure settings and calls a remote web page with t
 1. Download repository
 2. Run 'zat package' in app directory
 3. Install the app package from Admin/Apps > Manage > Upload private app
- * There are default values for 'token' and 'subdomain' -- feel free to change them
+ * There are default values for 'token' and 'subdomain' -- feel free to change them. For demo purposes, keep them 5 characters or less.
 4. Because it's a ticket_sidebar app, bring up a ticket and click app's 'Call Remote Server' 
 
 You should see your the values you entered for 'token' and 'subdomain' appear in the app window.
