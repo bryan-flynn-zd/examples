@@ -9,10 +9,7 @@
   "private": true,
   "location": {
     "support": {
-      "ticket_sidebar":{
-        "url":"http://localhost:44000/parent",
-        "signed":true
-      },
+      "ticket_sidebar":"http://localhost:44000/parent",
       "modal": "http://localhost:44000/modal"
     }
   },
