@@ -4,5 +4,6 @@ This is an example app. It makes a Zendesk API call and pages through all result
 
 Results are output to the browser's console window.
 
-Setup:
-Optional: Edit assets/iframe.html and change the three lines commented with 'MODIFY'. These lines reflect the API call and subsequent results being retrieved.
+**Optional setup:**
+
+Edit assets/iframe.html and change the three lines commented with 'MODIFY'. These lines reflect the API call and subsequent results being retrieved.
