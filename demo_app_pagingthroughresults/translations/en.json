@@ -1,0 +1,8 @@
+{
+  "app": {
+    "name": "Example Paging App",
+    "short_description": "Example app code on how to page through result sets from an API call.",
+    "long_description": "Apps framework v2 app that pages through results and builds up an array of results.\n\nResults get logged to browser's console window.",
+    "installation_instructions": "Click to install."
+  }
+}

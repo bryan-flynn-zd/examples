@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <h2 class="u-gamma">Example Results Paging App</h2>
+  <p>See results in Console window</p>
+  <button onClick="buttonPress()">Press me</button>
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script>
+    var client = ZAFClient.init();
+    client.invoke('resize', { width: '100%', height: '200px' });
+
+    // Where paging results are placed.
+    let finalArray = [];
+
+    // API that returns paged results. Relies on 'next_page' attribute in result set.
+    // MODIFY DEPENDING ON DESIRED RESULTS
+    let paged_request = '/api/v2/audit_logs.json'
+
+    function makeCall(page) {
+
+      if (page === null) {
+        console.dir("FINAL:", finalArray);
+        return;
+      }
+
+      return client.request(page).then((result) => {
+        // MODIFY DEPENDING ON OBJECT
+        result.audit_logs.forEach( (element) => {
+          // MODIFY DEPENDING ON RESULT SET
+          finalArray.push(element.source_type);
+        });
+
+        return result.next_page;
+        
+      }).then((next_page) => {
+        console.log("next_page:", next_page);
+        makeCall(next_page);
+      });
+    }
+
+    function buttonPress() {
+      makeCall(paged_request);
+    }
+
+  </script>
+</body>
+</html>
