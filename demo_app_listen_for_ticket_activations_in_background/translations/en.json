@@ -1,0 +1,8 @@
+{
+  "app": {
+    "name": "Demo Topbar talking to Sidebar",
+    "short_description": "Shows how sidebar apps can send info to another location whenever they are activiated.",
+    "long_description": "Shows how sidebar apps can send info to another location whenever they activated.",
+    "installation_instructions": "Click to install."
+  }
+}

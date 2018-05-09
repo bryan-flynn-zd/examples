@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script>
+    let client = ZAFClient.init();
+
+    client.get('instances').then(function(instanceData) {
+      var instances = instanceData.instances;
+      for (var instanceGuid in instances) {
+        if (instances[instanceGuid].location === 'top_bar') {
+          toolbar = client.instance(instanceGuid);
+          toolbar.invoke('preloadPane');
+        }
+      }
+    });
+
+    client.on('activeTab', function(response) {
+      console.log('activeTab in background', response);
+    });
+
+  </script>
+</body>
+</html>

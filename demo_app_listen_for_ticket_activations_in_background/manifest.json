@@ -1,0 +1,20 @@
+{
+  "name": "Demo Topbar talking to Sidebar",
+  "author": {
+    "name": "John",
+    "email": "john@example.com",
+    "url": ""
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": {
+    "support": {
+      "background": "assets/background.html",
+      "top_bar": "assets/top_bar.html",
+      "user_sidebar": "assets/user_sidebar.html",
+      "ticket_sidebar": "assets/ticket_sidebar.html"
+    }
+  },
+  "version": "1.0",
+  "frameworkVersion": "2.0"
+}

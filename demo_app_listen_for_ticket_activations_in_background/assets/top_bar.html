@@ -1,0 +1,19 @@
+<html>
+  <body>
+    <button onclick="window.location.reload()">Logout</button>
+    <script src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js" ></script>
+    <script>
+      let client = ZAFClient.init();
+
+      client.get('instances').then(function(instanceData) {
+        let instances = instanceData.instances;
+        for (let instanceGuid in instances) {
+          if (instances[instanceGuid].location === 'user_sidebar' || instances[instanceGuid].location === 'ticket_sidebar') {
+            let sidebar = client.instance(instanceGuid);
+            sidebar.trigger('topbar_initialised');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
