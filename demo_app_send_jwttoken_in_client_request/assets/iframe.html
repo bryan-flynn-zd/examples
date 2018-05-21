@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+<!--   
+    NOTE: THIS APP USES THE ZENDESK APPS FRAMEWORK PROXY. IT CANNOT BE 
+    RUN LOCALLY WITH zat server. UPLOAD IT TO YOUR ZENDESK INSTANCE AND TEST
+    FROM THERE.
+
+    IT ALSO ASSUMES YOU HAVE A REMOTE SERVER RUNNING AND AVAILABLE ENDPOINT.
+    YOU CAN USE GLITCH.COM AS SHOWN OR MODIFY THE REMOTE URL WITH YOUR OWN ENDPOINT.
+
+    REMOTE GLITCH.COM SERVER CODE:
+    // Returns JSON object
+    app.post("/demo1", function (request, response) {
+      console.log(request.headers);
+      console.log(request.query);
+      response.send('{"response":"Demo1 POST endpoint called"}');  
+    });
+ -->
+</head>
+<body>
+  <h2>Test Sending JWT token</h2><br/>
+  <button onClick="buttonPress()">Press to send JWT</button>
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script>
+    let client = ZAFClient.init();
+    client.invoke('resize', { width: '100%', height: '200px' });
+
+    function buttonPress() {
+
+      console.log("button pressed");
+
+      // For more info on JWTs: https://jwt.io/introduction/
+      // This example sends same jwt.token as a query parameter AND in request's payload.
+      // This is just for demo purposes only.
+      let options = {
+        // TODO: Replace this with your own endpoint.
+        url: 'https://yourown-glitchsubdomain.glitch.me/demo1?token={{jwt.token}}',
+        headers: {
+          'Authorization': 'JWT {{jwt.token}}'
+        },
+        contentType: 'application/json',
+        secure: true,
+        jwt: {
+          algorithm: 'HS256',
+          secret_key: 'some_shared_secret',
+          expiry: 3600,
+          claims: {
+            // EXAMPLE: Your own custom private claims
+            nam: 'my custom name',
+            cs1: 1,
+            cs2: 'hello',
+            // Registered/standard claims
+            iat: 1372113305,
+            jti: '8883362531196.326',
+            iss: 'some_subdomain',
+          }
+        },
+        type: 'POST',
+        dataType: 'json'
+      };
+
+      client.request(options).then((response) => {
+        console.group(response);
+      });
+
+    }
+
+  </script>
+</body>
+</html>

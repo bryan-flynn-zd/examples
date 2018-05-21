@@ -1,0 +1,8 @@
+{
+  "app": {
+    "name": "Send JWT Token Example",
+    "short_description": "Sends jwt.token in client.request call.",
+    "long_description": "Sends jwt.token in client.request call.",
+    "installation_instructions": "Click Install."
+  }
+}
