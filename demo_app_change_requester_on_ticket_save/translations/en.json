@@ -1,0 +1,8 @@
+{
+  "app": {
+    "name": "Change Ticket Requester on Save",
+    "short_description": "Changes ticket.requester on ticket.save event.",
+    "long_description": "Changes ticket.requester on ticket.save event.",
+    "installation_instructions": "Click install."
+  }
+}
