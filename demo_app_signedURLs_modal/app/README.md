@@ -16,5 +16,5 @@ A modal should be displayed with something like:
 >POST: MODAL Welcome John Smith from myzendesksubdomain.zendesk.com!  
 >call count: 3
 
-See also:
-https://developer.zendesk.com/apps/docs/support-api/modal
+## Reference
+* https://developer.zendesk.com/apps/docs/support-api/modal  

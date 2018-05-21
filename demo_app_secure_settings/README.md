@@ -21,4 +21,6 @@ You should see your the values you entered for 'token' and 'subdomain' appear in
 
 * For your own remote server, include the subdomain in the domainWhitelist value of your manifest.json
 
-* See also https://developer.zendesk.com/apps/docs/developer-guide/using_sdk#using-secure-settings
+
+## References
+* [Using Secure Settings](https://developer.zendesk.com/apps/docs/developer-guide/using_sdk#using-secure-settings)

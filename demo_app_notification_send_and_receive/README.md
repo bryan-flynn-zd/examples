@@ -6,10 +6,6 @@ The first app sends a notification event, along with some data, to another app.
 
 The second app receives the event and its data and displays it.
 
-See also:   
-https://developer.zendesk.com/rest_api/docs/core/apps#send-notification-to-app  
-https://developer.zendesk.com/apps/docs/apps-v2/api_reference#client.onname-handler-context
-
 **Setup:**
 
 Create the 'Receive' app first:
@@ -27,3 +23,7 @@ Create the 'Send' app:
 8. `zat create`
 
 Do a refresh of your Apps and click the Send app's 'send' button. You should see the current date and time show up in the Receive app's display.
+
+# Reference
+* https://developer.zendesk.com/rest_api/docs/core/apps#send-notification-to-app  
+* https://developer.zendesk.com/apps/docs/apps-v2/api_reference#client.onname-handler-context
