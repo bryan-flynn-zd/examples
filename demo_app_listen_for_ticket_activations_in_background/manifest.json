@@ -1,8 +1,8 @@
 {
-  "name": "Demo Topbar talking to Sidebar",
+  "name": "Demo Topbar Displaying Sidebar App Data",
   "author": {
-    "name": "John",
-    "email": "john@example.com",
+    "name": "Bryan",
+    "email": "bflynn@zendesk.com",
     "url": ""
   },
   "defaultLocale": "en",
@@ -11,8 +11,8 @@
     "support": {
       "background": "assets/background.html",
       "top_bar": "assets/top_bar.html",
-      "user_sidebar": "assets/user_sidebar.html",
-      "ticket_sidebar": "assets/ticket_sidebar.html"
+      "ticket_sidebar": { "autoLoad": false },
+      "user_sidebar": { "autoLoad": false }
     }
   },
   "version": "1.0",

@@ -1,19 +1,71 @@
+<!doctype html>
 <html>
-  <body>
-    <button onclick="window.location.reload()">Logout</button>
-    <script src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js" ></script>
-    <script>
-      let client = ZAFClient.init();
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <div id="sidebar_data"></div>
+  <script src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script>
+    let top_bar = ZAFClient.init();
+    top_bar.invoke("resize", {width: "800px", height: "600px"});
 
-      client.get('instances').then(function(instanceData) {
-        let instances = instanceData.instances;
-        for (let instanceGuid in instances) {
-          if (instances[instanceGuid].location === 'user_sidebar' || instances[instanceGuid].location === 'ticket_sidebar') {
-            let sidebar = client.instance(instanceGuid);
-            sidebar.trigger('topbar_initialised');
+
+    function setSidebarEventHandler(instanceGuid, location) {
+      // Get sidebar app instance.
+      let appInstance = top_bar.instance(instanceGuid);
+      // Have sidebar app call top_bar app's "activeTab" event on sidebar's "app.activated" 
+      // and "app.deactivated" events.
+      appInstance.on("app.activated", () => {
+        top_bar.trigger("activeTab", `{"instanceGuid":"${instanceGuid}", "location": "${location}"}`);
+      });
+      appInstance.on("app.deactivated", () => {
+        top_bar.trigger("activeTab", '{"instanceGuid":"none", "location": "none"}');
+      });
+    }
+
+    function displaySidebarInfo(instanceGuid, location) {
+      document.getElementById("sidebar_data").textContent = `App instance GUID: ${instanceGuid}, location: ${location}`;
+    }
+
+
+    top_bar.on("app.registered", () => {
+      // Listen for event that sidebar apps will be sending.
+      top_bar.on("activeTab", (data) => {
+        let instance_info = JSON.parse(data);
+        displaySidebarInfo(instance_info.instanceGuid, instance_info.location);
+      });
+
+      // Attach handler to existing sidebar instances.
+      top_bar.get("instances").then((data) => {
+        // var instanceGuids = Object.keys(data.instances);
+        Object.keys(data.instances).forEach((instanceGuid) => {
+          let location = data.instances[instanceGuid].location;
+          if (location === "ticket_sidebar" ||
+              location === "user_sidebar") {
+            setSidebarEventHandler(instanceGuid, location);
+            // When first displaying agent UI, there should only be one app.
+            displaySidebarInfo(instanceGuid, location);
           }
+        });
+      });
+
+      // Attach handler to new sidebar instances.
+      top_bar.on("instance.created", (context) => {
+        let instanceGuid = context.instanceGuid;
+        let location = context.location;
+        if (location === "ticket_sidebar" ||
+            location === "user_sidebar") {
+          setSidebarEventHandler(instanceGuid, location);
+
+          // Sidebar instances of the app are created when first displaying that ticket or user.
+          // Update display to new app instance's info.
+          displaySidebarInfo(instanceGuid, location);
         }
       });
-    </script>
-  </body>
+
+    });
+
+  </script>
+</body>
 </html>

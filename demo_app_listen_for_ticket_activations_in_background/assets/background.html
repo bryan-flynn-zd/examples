@@ -8,18 +8,31 @@
   <script>
     let client = ZAFClient.init();
 
-    client.get('instances').then(function(instanceData) {
-      var instances = instanceData.instances;
-      for (var instanceGuid in instances) {
-        if (instances[instanceGuid].location === 'top_bar') {
-          toolbar = client.instance(instanceGuid);
-          toolbar.invoke('preloadPane');
+    function setupTopBar(topbarGuid) {
+      let top_bar = client.instance(topbarGuid);
+      // top_bar locations by default are loaded when user clicks them.
+      // 'preloadPane' loads top_bar, avoiding having to click first.
+      top_bar.invoke("preloadPane");
+    }
+
+    // Find top_bar if it was already created.
+    client.get("instances").then((data) => {
+      Object.keys(data.instances).forEach((instanceGuid) => {
+        if (location === "top_bar") {
+          setupTopBar(instanceGuid);
         }
-      }
+      });
     });
 
-    client.on('activeTab', function(response) {
-      console.log('activeTab in background', response);
+    // Wait for top_bar to be created if it hasn't been created yet.
+    client.on("instance.created", (context) => {
+      let instanceGuid = context.instanceGuid;
+      let location = context.location;
+      if (location === "top_bar") {
+        setupTopBar(instanceGuid);
+        // Once top_bar is set up, don't need this handler any longer.
+        client.off("instance.created");
+      }
     });
 
   </script>
