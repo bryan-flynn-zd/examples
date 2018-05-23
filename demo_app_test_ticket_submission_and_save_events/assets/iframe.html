@@ -1,0 +1,44 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/2/zendesk_garden.css" type="text/css">
+</head>
+<body>
+  <h2 class="u-gamma">Test Ticket Save Events</h2>
+  <p>View Console window for what gets fired</p>
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script>
+    var client = ZAFClient.init();
+    client.invoke('resize', { width: '100%', height: '200px' });
+
+    client.on('ticket.save', function() {
+      console.log("ticket.save called");
+      // Syntax: client.set('ticket.customField:custom_field_XXX');
+      // https://developer.zendesk.com/apps/docs/support-api/ticket_sidebar#ticket.customfieldfieldname
+      // 
+      // client.set() returns a Promise:
+      // https://developer.zendesk.com/apps/docs/core-api/client_api#client.setkey-val
+      // Uncomment this if you want to test saving to a custom field:
+      // return client.set('ticket.customField:custom_field_80424847', `time: ${Date()}`);
+      return true;
+    });
+
+    client.on('ticket.submit.start', function() {
+      console.log("ticket.submit.start called");
+    });
+
+    client.on('ticket.submit.done', function() {
+      console.log("ticket.submit.done called");
+    });
+
+    client.on('ticket.submit.fail', function() {
+      console.log("ticket.submit.fail");
+    });
+
+    client.on('ticket.submit.always', function() {
+      console.log("ticket.submit.always called");
+    });
+
+  </script>
+</body>
+</html>
