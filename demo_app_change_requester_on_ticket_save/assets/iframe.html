@@ -27,7 +27,7 @@
       }).then((response) => {
         // SECOND update requester with user information
         console.log("API response ID:", response.user.id);
-          return client.set("ticket.requester", { email: response.user.email }).then((data) => console.log("set:", data));
+        return client.set("ticket.requester", { email: response.user.email }).then((data) => console.log("set:", data));
       }).then(function(response) {
         // THIRD do any further processing and let 'save' operation continue by returning true.
         return true;
