@@ -1,0 +1,8 @@
+{
+  "app": {
+    "name": "Test Activate Events",
+    "short_description": "Display registered/activated/deactivated events in console.",
+    "long_description": "Display app.registered, pane.activated, pane.deactivated events in console across all app locations.",
+    "installation_instructions": "Click Install."
+  }
+}

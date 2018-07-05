@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <h2>Test App Activated Events</h2>
+  <button onClick="displayModal()">Open modal window</button>
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script>
+    let client = ZAFClient.init();
+
+    client.on('app.activated', (data) => {
+      console.log(`DEBUG ${client._context["location"]} app.activated`, data);
+    });
+
+    client.on('pane.activated', (data) => {
+      console.log(`DEBUG ${client._context["location"]} pane.activated`, data);
+    });
+
+    client.on('pane.deactivated', (data) => {
+      console.log(`DEBUG ${client._context["location"]} pane.deactivated`, data);
+    });
+
+    client.on('app.registered', (data) => {
+      console.log(`DEBUG ${client._context["location"]} app.registered`, data);
+    });
+
+    function displayModal() {
+      return client.invoke('instances.create', {
+        location: 'modal',
+        url: 'assets/iframe.html'
+      }).then(function(data) {
+        let instanceGuid = data['instances.create'][0].instanceGuid;
+        let modalClient = client.instance(instanceGuid);
+        modalClient.on('modal.close', (data) => {
+          console.log(`DEBUG modal.close`, data);
+        });
+      });
+    }
+
+    </script>
+</body>
+</html>

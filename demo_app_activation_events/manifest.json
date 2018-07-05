@@ -1,0 +1,24 @@
+{
+  "name": "Test Activate Events",
+  "author": {
+    "name": "Bryan",
+    "email": "bflynn@zendesk.com",
+    "url": ""
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": {
+    "support": {
+      "ticket_sidebar": "assets/iframe.html",
+      "new_ticket_sidebar": "assets/iframe.html",
+      "nav_bar":"assets/iframe.html",
+      "top_bar":"assets/iframe.html",
+      "user_sidebar": "assets/iframe.html",
+      "organization_sidebar": "assets/iframe.html",
+      "ticket_editor": "assets/iframe.html",
+      "background": "assets/iframe.html"
+    }
+  },
+  "version": "1.0",
+  "frameworkVersion": "2.0"
+}
