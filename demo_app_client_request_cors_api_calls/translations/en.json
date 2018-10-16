@@ -1,0 +1,8 @@
+{
+  "app": {
+    "name": "ZAF Client Request Tester",
+    "short_description": "Shows different ways of using the ZAF client.request method.",
+    "long_description": "Shows different ways of using the ZAF client.request method.",
+    "installation_instructions": "Click Install."
+  }
+}

@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+  <!-- This is for demo purposes only. This is not production code. Please do not code this way. -->
+  <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+  <h3>Calling Zendesk API:</h3>
+  <button onClick="buttonPress1()">Example 1</button>
+  <p>url: '/api/v2/tickets.json'</p><hr>
+  <h3>Calling remote API:</h3>
+  <label for="remoteUrl">Enter the remote URL to call:</label>
+  <input style="width:250px" name="remoteUrl" id="remoteUrl" value="https://api.github.com">
+  <hr>
+  <button onClick="buttonPress2()">Example 2</button>
+  <p>client.request, cors:true</p><hr>
+  <button onClick="buttonPress3()">Example 3</button>
+  <p>client.request, cors:false</p><hr>
+  <button onClick="buttonPress4()">Example 4</button>
+  <p>AJAX</p><hr>
+  <h3>Results:</h3>
+  <p id="apiCallResults"></p>
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script>
+
+    let client = ZAFClient.init();
+    client.invoke('resize', { width: '100%', height: '600px' });
+    
+    // Example 1
+    function buttonPress1() {
+      console.log("Example 1: Making client.request call against Zendesk REST API");
+      let options = {
+        url: '/api/v2/tickets.json',
+        type: 'GET'
+      };
+
+      return client.request(options)
+        .then((results) => {
+          document.querySelector("#apiCallResults").innerHTML = "Success!";
+          console.log("Example 1 call results:", results);
+        })
+        .catch((error) => {
+          document.querySelector("#apiCallResults").innerHTML = "Fail!";
+          console.log("Example 1 call error:", error);
+        });
+    }
+
+    // Example 2
+    function buttonPress2() {
+      console.log("Example 2: Making client.request API call with cors:true");
+
+      let remoteUrl = document.querySelector("#remoteUrl").value;
+
+      let options = {
+        url: remoteUrl,
+        type: 'GET',
+        cors: true
+      };
+
+      return client.request(options)
+        .then((results) => {
+          document.querySelector("#apiCallResults").innerHTML = "Success!";
+          console.log("Example 2 call results:", results);
+        })
+        .catch((error) => {
+          document.querySelector("#apiCallResults").innerHTML = "Fail!";
+          console.log("Example 2 call error:", error);
+        });
+    }
+
+    // Example 3
+    function buttonPress3() {
+      console.log("Example 3: Making client.request API call with cors:false");
+
+      let remoteUrl = document.querySelector("#remoteUrl").value;
+
+      let options = {
+        url: remoteUrl,
+        type: 'GET',
+        cors: false
+      };
+
+      return client.request(options)
+        .then((results) => {
+          console.log("Example 3 call results:", results);
+          document.querySelector("#apiCallResults").innerHTML = "Success!";
+        })
+        .catch((error) => {
+          document.querySelector("#apiCallResults").innerHTML = "Fail!";
+          console.log("Example 3 call error:", error);
+        });
+    }
+
+    // Example 4
+    function buttonPress4() {
+      console.log("Example 4: Making an AJAX call");
+
+      let remoteUrl = document.querySelector("#remoteUrl").value;
+
+      $.ajax({
+        url: remoteUrl,
+        type: 'GET'
+      })
+      .then((results) => {
+        console.log("Example 4, part 1 call results:", results);
+        document.querySelector("#apiCallResults").innerHTML = "Success!";
+      })
+      .catch((error) => {
+        document.querySelector("#apiCallResults").innerHTML = "Fail!";
+        console.log("Example 4 call error:", error);
+      });
+    }
+  </script>
+</body>
+</html>
