@@ -4,35 +4,31 @@
   <meta charset="utf-8">
 </head>
 <body>
+  <script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
   <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
   <script>
     let client = ZAFClient.init();
 
-    function setupTopBar(topbarGuid) {
-      let top_bar = client.instance(topbarGuid);
-      // top_bar locations by default are loaded when user clicks them.
-      // 'preloadPane' loads top_bar, avoiding having to click first.
-      top_bar.invoke("preloadPane");
-    }
+    client.on('app.registered', () => {
 
-    // Find top_bar if it was already created.
-    client.get("instances").then((data) => {
-      Object.keys(data.instances).forEach((instanceGuid) => {
+      // Find top_bar if it was already created.
+      client.get('instances').then(function(data) {
+        let topBarClient = client.instance(_.findWhere(data.instances, { location: 'top_bar' }).instanceGuid);
+        topBarClient.invoke('preloadPane').then(data => {return topBarClient.invoke('popover', 'show')});
+      });
+
+      // Wait for top_bar to be created if it hasn't been created yet.
+      client.on("instance.created", (context) => {
+        let instanceGuid = context.instanceGuid;
+        let location = context.location;
         if (location === "top_bar") {
-          setupTopBar(instanceGuid);
+          let top_bar = client.instance(instanceGuid);
+          top_bar.invoke("preloadPane").then(data => {return top_bar.invoke('popover', 'show')});
+          // Once top_bar is set up, don't need this handler any longer.
+          client.off("instance.created");
         }
       });
-    });
 
-    // Wait for top_bar to be created if it hasn't been created yet.
-    client.on("instance.created", (context) => {
-      let instanceGuid = context.instanceGuid;
-      let location = context.location;
-      if (location === "top_bar") {
-        setupTopBar(instanceGuid);
-        // Once top_bar is set up, don't need this handler any longer.
-        client.off("instance.created");
-      }
     });
 
   </script>
