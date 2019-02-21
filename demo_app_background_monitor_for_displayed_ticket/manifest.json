@@ -1,0 +1,18 @@
+{
+  "name": "Demo Background Displaying Ticket Sidebar Data",
+  "author": {
+    "name": "Bryan",
+    "email": "bflynn@zendesk.com",
+    "url": ""
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": {
+    "support": {
+      "background": "assets/background.html",
+      "ticket_sidebar": {"autoLoad": false}
+    }
+  },
+  "version": "1.0",
+  "frameworkVersion": "2.0"
+}

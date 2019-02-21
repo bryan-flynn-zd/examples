@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <script>
+    let client = ZAFClient.init()
+
+    client.on('setDisplayedTicketNumber', (ticketID) => {
+      console.log("On ticket ID:", ticketID)
+    });
+
+    function setSidebarEventHandler(instanceGuid) {
+      let appInstance = client.instance(instanceGuid);
+
+      // This code will be called on app.registered event of ticket.
+      appInstance.get('ticket.id').then((result) => {
+        client.trigger('setDisplayedTicketNumber', result["ticket.id"])
+      })
+
+      // Set up sidebar's activated event.
+      appInstance.on('app.activated', () => {  
+        appInstance.get('ticket.id').then((result) => {
+          client.trigger('setDisplayedTicketNumber', result["ticket.id"])
+        })
+      });
+
+    }
+
+    client.on('app.registered', (context) => {
+
+      // Get any existing instance to attach handlers.
+      client.get('instances').then((instancesData) => {
+        let instances = instancesData.instances;
+        for (let instanceGuid in instances) {
+          if (instances[instanceGuid].location === 'ticket_sidebar') {
+            setSidebarEventHandler(instanceGuid);
+          }
+        }
+      })
+
+      // Look for new ticket sidebar instances to attach handlers.
+      client.on("instance.created", (context) => {
+        let instanceGuid = context.instanceGuid;
+        let location = context.location;
+        if (location === 'ticket_sidebar') {
+          setSidebarEventHandler(instanceGuid);
+        }
+      });
+
+    });
+
+  </script>
+</body>
+</html>

@@ -26,6 +26,10 @@
       console.log(`DEBUG ${client._context["location"]} app.registered`, data);
     });
 
+    client.on('app.deactivated', (data) => {
+      console.log(`DEBUG ${client._context["location"]} app.deactiviated`, data);
+    });
+
     function displayModal() {
       return client.invoke('instances.create', {
         location: 'modal',

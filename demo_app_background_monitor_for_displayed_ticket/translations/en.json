@@ -1,0 +1,8 @@
+{
+  "app": {
+    "name": "Demo top_bar Displaying Sidebar App Info",
+    "short_description": "Shows sidebar apps with autoLoad:false sending info to top_bar location.",
+    "long_description": "Shows sidebar apps with autoLoad:false sending info to top_bar location.",
+    "installation_instructions": "Click to install."
+  }
+}
