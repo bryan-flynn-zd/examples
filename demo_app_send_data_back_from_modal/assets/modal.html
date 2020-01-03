@@ -24,9 +24,6 @@
       parentClient = modalClient.instance(parentClientGuid)
     })
 
-    // Resize model to be 40% of parent window.
-    modalClient.invoke('resize', { width: '40vw', height: '40vh' })
-
     // Use if an action is needed when user clicks 'X' or clicks outside of modal.
     // modalClient.on('modal.close', () => {
     //   console.debug("on modal.close called...")
@@ -39,7 +36,7 @@
       $('#tag1').is(':checked') ? tagsToAdd.push('tag1') : null
       $('#tag2').is(':checked') ? tagsToAdd.push('tag2') : null
       $('#tag3').is(':checked') ? tagsToAdd.push('tag3') : null
-      parentClient.trigger('sending_modal_data', JSON.stringify(tagsToAdd))
+      parentClient.trigger('send_modal_data', JSON.stringify(tagsToAdd))
       modalClient.invoke('destroy')
     }
 

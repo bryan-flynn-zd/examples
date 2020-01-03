@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <!-- Zendesk CSS styles -->
+  <!-- Zendesk Garden CSS styles -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/@zendeskgarden/css-buttons@7,npm/@zendeskgarden/css-utilities@4">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
 </head>
@@ -22,7 +22,7 @@
         let instanceGuid = context.instanceGuid
         let modalClient = client.instance(instanceGuid)
 
-        // Send modal this client's instance guid via trigger data.
+        // Send modal this client's instance guid via trigger.
         // The modal will use the guid to get a client instance back to this parent.
         modalClient.trigger('send_parent_client_guid_event', client._instanceGuid)
       }
@@ -31,7 +31,11 @@
     function displayModal() {
       return client.invoke('instances.create', {
         location: 'modal',
-        url: 'assets/modal.html'
+        url: 'assets/modal.html',
+        size: {
+          width: '40vw',
+          height: '40vh'
+        }
       })
     }
 
@@ -40,9 +44,9 @@
     }
 
     // Get data back from modal via trigger data.
-    // See this line in modal.html: parentClient.trigger('sending_modal_data', JSON.stringify(tagsToAdd))
-    client.on('sending_modal_data', (modalData) => {
-      console.debug('sending_modal_data event called...')
+    // See this line in modal.html: parentClient.trigger('send_modal_data', JSON.stringify(tagsToAdd))
+    client.on('send_modal_data', (modalData) => {
+      console.debug('send_modal_data event called...')
       console.debug(modalData)
       // Assume data in array format.
       let tagArray = JSON.parse(modalData)
