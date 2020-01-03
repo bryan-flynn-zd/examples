@@ -19,6 +19,8 @@
   <p>client.request, cors:false</p><hr>
   <button onClick="buttonPress4()">Example 4</button>
   <p>AJAX</p><hr>
+  <button onClick="buttonPress5()">Example 5</button>
+  <p>client.request, POST cors:false</p><hr>
   <h3>Results:</h3>
   <p id="apiCallResults"></p>
   <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
@@ -111,6 +113,31 @@
         console.log("Example 4 call error:", error);
       });
     }
+
+    // Example 5
+    function buttonPress5() {
+      console.log("Example 5: Making POST client.request API call with cors:false");
+
+      let remoteUrl = document.querySelector("#remoteUrl").value;
+
+      let options = {
+        url: remoteUrl,
+        type: 'POST',
+        cors: false,
+        headers: {"Authorization": "Bearer ABCDEFG"}
+      };
+
+      return client.request(options)
+        .then((results) => {
+          console.log("Example 5 call results:", results);
+          document.querySelector("#apiCallResults").innerHTML = "Success!";
+        })
+        .catch((error) => {
+          document.querySelector("#apiCallResults").innerHTML = "Fail!";
+          console.log("Example 5 call error:", error);
+        });
+    }
+
   </script>
 </body>
 </html>
