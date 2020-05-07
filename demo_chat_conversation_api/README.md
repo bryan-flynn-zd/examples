@@ -29,7 +29,6 @@ The script requires `npm install` of the "[ws](https://github.com/websockets/ws)
      * sendQuickReplies
      * transferToDepartment
      * updateAgentStatus
-
 * Text "commands" visitor can enter that trigger and demonstrate different API actions. See code for implementation details.
  * "send ordered" - demos sending a series of ordered messages
  * "get agents" - retrieves list of chat agents
