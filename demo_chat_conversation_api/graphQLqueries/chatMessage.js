@@ -31,7 +31,7 @@ class ChatMessage {
   messageSucceeded(data) {
     // Resolve Promise
     console.log(`[${this.name}] Success. Message ID: ${this.id}. Message payload: ${JSON.stringify(data)}`)
-    this.promiseResolve(this.name)
+    this.promiseResolve(this.id)
     
     // Remove from Map
     this.messageMap.delete(this.id)
@@ -39,7 +39,7 @@ class ChatMessage {
 
   messageFailed(data) {
     console.log(`[${this.name}] Fail. Message ID: ${this.id}. Errors: ${JSON.stringify(data)}`)
-    this.promiseRejected(this.name)
+    this.promiseRejected(this.id)
     this.messageMap.delete(this.id)
   }
 }
