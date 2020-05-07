@@ -20,33 +20,16 @@
  * - Invite another agent to the existing channel
  * - Get and console output agent list (enter 'get agents').
  *
- * There are 2 ways to run the app: (1) from your local
- * machine, or (2) using Codesandbox. The
- * former allows you to run the app without needing
- * to setup the Node environment.
- *
- * (1) Using Local Machine
+ * Setup on local machine:
  * - Require Node 8 or above
  * - Install dependencies: `ws` and `superagent` using
  *   npm or yarn
- * - Update `ACCESS_TOKEN` constants with the access
- *   token that you want to use. Refers to
- *   https://developer.zendesk.com/rest_api/docs/chat/auth
+ * - Set CHATAPITOKEN environment variable, set to your 
+ *   Chat API token. See https://developer.zendesk.com/rest_api/docs/chat/auth
  *   for access token generation guide. Make sure
  *   that it has `read`, `write`, and `chat` scrope.
- * - Run the app using `node conversations_api_sample_app.js`
+ * - Run the app using `node node_chat_conversation_api_script.js`
  *
- * (2) Using Codesandbox
- * - Fork the sandbox by clicking the `Fork` button
- * - Update `ACCESS_TOKEN` constants with the access
- *   token that you want to use. Refers to
- *   https://developer.zendesk.com/rest_api/docs/chat/auth
- *   for access token generation guide. Make sure
- *   that it has `read`, `write`, and `chat` scrope.
- *   ⚠️ WARNING: Your Codesandbox might be public. Please
- *   make sure you did not leave your access token
- *   publicly.
- * - Check the `Terminal` for the process output.
  */
 const WebSocket = require('ws')    // https://github.com/websockets/ws
 const request = require('superagent')    // https://github.com/visionmedia/superagent
@@ -61,11 +44,6 @@ const MutationInviteAgent = require('./graphQLqueries/mutationInviteAgent')
 const MutationTransferToDepartment = require('./graphQLqueries/mutationTransferToDepartment')
 const QueryDepartments = require('./graphQLqueries/queryDepartments')
 const QueryAgents = require('./graphQLqueries/queryAgents')
-
-// Chat Conversation API tokens have a special scope. For details:
-// https://developer.zendesk.com/rest_api/docs/chat/conversations-api#authentication
-// https://support.zendesk.com/hc/en-us/articles/115010760808
-const ACCESS_TOKEN = 'TODO - YOUR_CHAT_CONVERSATION_API_TOKEN_HERE'
 
 const CHAT_API_URL = 'https://chat-api.zopim.com/graphql/request'
 const SUBSCRIPTION_DATA_SIGNAL = 'DATA'
@@ -102,7 +80,15 @@ async function generateNewAgentSession(access_token) {
 
 async function startAgentSession() {
   try {
-    const startAgentSessionResp = (await generateNewAgentSession(ACCESS_TOKEN)).body
+    if (!!process.env.CHATAPITOKEN === false) {
+      // Chat Conversation API tokens have a special scope. For details:
+      // https://developer.zendesk.com/rest_api/docs/chat/conversations-api#authentication
+      // https://support.zendesk.com/hc/en-us/articles/115010760808
+      // Run in terminal: export CHATAPITOKEN=ABCDEFGHIJKLMNOP_YOUR_TOKEN
+      console.log("No enviornment token set. Please run 'export CHATAPITOKEN=<Your Token>'.")
+      process.exit(1)
+    }
+    const startAgentSessionResp = (await generateNewAgentSession(process.env.CHATAPITOKEN)).body
 
     if (
       startAgentSessionResp.errors &&
