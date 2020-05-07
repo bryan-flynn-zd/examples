@@ -6,21 +6,23 @@ class MutationTransferToDepartment extends ChatMessage {
 
     super(webSocket, messageMap, 'transferToDepartment')
 
-    this.graphQlMessage = {
-            id: this.id,
-            type: "request",
-            payload: {
-              query: `mutation {
-                        transferToDepartment(
-                          channel_id: "${channelID}", 
-                          department_id: "${departmentID}"
-                        ) 
-                        {
-                          success
-                        }
-                      }`
-            }
-          }
+    this.graphQlMessage = 
+      {
+        id: this.id,
+        type: "request",
+        payload: {
+          query: `mutation {
+                    transferToDepartment(
+                      channel_id: "${channelID}", 
+                      department_id: "${departmentID}"
+                    ) 
+                    {
+                      success
+                    }
+                  }`
+        }
+      }
+
   }
 }
 

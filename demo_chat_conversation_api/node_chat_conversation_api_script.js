@@ -206,7 +206,7 @@ function connectWebSocket(websocket_url) {
       }
     }
 
-    // Listen to chat messages from the visitor.
+    // Listen to chat messages from visitor.
     if (
       data.sig === SUBSCRIPTION_DATA_SIGNAL &&
       data.subscription_id === messageSubscriptionId &&
@@ -225,6 +225,27 @@ function connectWebSocket(websocket_url) {
           let replyBackToVisitor = 
             new MutationSendMessage(webSocket, messageMap, chatMessage.channel.id, chatMessage.content)
           replyBackToVisitor.sendMessage()
+          break
+
+        case 'send ordered':
+          /*********************************************************************
+           * Send a series of ordered messages, one after the other. You have  *
+           * to wait for a message's response before sending the next message  *
+           * if the messages are to be sent in a particular order.             *
+           *********************************************************************/
+          let sendMessagesinOrder = 
+            new MutationSendMessage(webSocket, messageMap, chatMessage.channel.id, "Message 1")
+
+          sendMessagesinOrder.sendMessage()
+            .then((success) => {
+              (new MutationSendMessage(webSocket, messageMap, chatMessage.channel.id, "Message 2")).sendMessage()
+                .then((success) => {
+                  (new MutationSendMessage(webSocket, messageMap, chatMessage.channel.id, "Message 3")).sendMessage()
+                    .then((success) => {
+                      (new MutationSendMessage(webSocket, messageMap, chatMessage.channel.id, "Message 4")).sendMessage()
+                    })
+                })
+            })
           break
 
         case 'get agents':
@@ -255,6 +276,9 @@ function connectWebSocket(websocket_url) {
           /***************************************
            * Invite agent to same channel as bot *
            ***************************************/
+
+          // NOTE: Agent ID here is hardcoded for demo purposes. Also note that this
+          // is a Chat channel user ID, *not* a Zendesk Support /api/v2/users.json id.
           let inviteAgent = 
             new MutationInviteAgent(
               webSocket,

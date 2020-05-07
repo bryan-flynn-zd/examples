@@ -6,42 +6,44 @@ class SubscriptionMessage extends ChatMessage {
 
     super(webSocket, messageMap, 'message')
 
-    this.graphQlMessage = {
-      id: this.id,
-      type: "request",
-      payload: {
-        query: `subscription {
-                  message {
-                    node {
-                      id
-                      content
-                      channel {
+    this.graphQlMessage = 
+      {
+        id: this.id,
+        type: "request",
+        payload: {
+          query: `subscription {
+                    message {
+                      node {
                         id
-                        ... on VisitorChannel {
-                          ip
-                          user_agent
-                          visitor {
-                            current_country
-                            current_region
-                            external_id
-                            display_name
-                            email
+                        content
+                        channel {
+                          id
+                          ... on VisitorChannel {
+                            ip
+                            user_agent
+                            visitor {
+                              current_country
+                              current_region
+                              external_id
+                              display_name
+                              email
+                              current_tags
+                            }
+                          }
+                        }
+                        from {
+                          __typename
+                          display_name
+                          ... on Visitor {
                             current_tags
                           }
                         }
                       }
-                      from {
-                        __typename
-                        display_name
-                        ... on Visitor {
-                          current_tags
-                        }
-                      }
                     }
-                  }
-                }`
+                  }`
+        }
       }
-    }
+
   }
 
   messageSucceeded(data) {

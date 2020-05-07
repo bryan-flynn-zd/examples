@@ -6,21 +6,23 @@ class MutationSendMessage extends ChatMessage {
 
     super(webSocket, messageMap, 'sendMessage')
 
-    this.graphQlMessage = {
-            id: this.id,
-            type: "request",
-            payload: {
-              query: `mutation { 
-                        sendMessage(
-                          channel_id: "${channelID}", 
-                          msg: "${message}"
-                        ) 
-                        {
-                          success
-                        }
-                      }`
-            }
-          }
+    this.graphQlMessage = 
+      {
+        id: this.id,
+        type: "request",
+        payload: {
+          query: `mutation { 
+                    sendMessage(
+                      channel_id: "${channelID}", 
+                      msg: "${message}"
+                    ) 
+                    {
+                      success
+                    }
+                  }`
+        }
+      }
+
   }
 }
 

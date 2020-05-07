@@ -6,22 +6,24 @@ class MutationInviteAgent extends ChatMessage {
 
     super(webSocket, messageMap, 'inviteAgent')
 
-    this.graphQlMessage = {
-              id: this.id,
-              type: "request",
-              payload: {
-                query: `mutation {
-                          inviteAgent(
-                            agent_id: "${agentID}",
-                            channel_id: "${channelID}",
-                            leave: false
-                          )
-                          {
-                            success
-                          }
-                       }`
-              }
-            }
+    this.graphQlMessage = 
+      {
+        id: this.id,
+        type: "request",
+        payload: {
+          query: `mutation {
+                    inviteAgent(
+                      agent_id: "${agentID}",
+                      channel_id: "${channelID}",
+                      leave: false
+                    )
+                    {
+                      success
+                    }
+                 }`
+        }
+      }
+
   }
 }
 
