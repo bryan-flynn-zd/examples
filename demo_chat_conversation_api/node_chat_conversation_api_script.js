@@ -240,6 +240,9 @@ function connectWebSocket(websocket_url) {
            ***************************/
           let queryAgents = new QueryAgents(webSocket, messageMap)
           queryAgents.sendMessage()
+            .then((results) => {
+              console.table(results)
+            })
           break
 
         case 'what ice cream flavor':
@@ -279,6 +282,8 @@ function connectWebSocket(websocket_url) {
         case 'transfer':
           let getDeparments = new QueryDepartments(webSocket, messageMap)
           getDeparments.sendMessage().then((departments) => {
+
+            console.table(departments)
 
             // Find departments with Online status and transfer to a random selection.
             const onlineDepartments = departments.filter(department => department.status === 'ONLINE')

@@ -15,7 +15,7 @@ class MutationInviteAgent extends ChatMessage {
                     inviteAgent(
                       agent_id: "${agentID}",
                       channel_id: "${channelID}",
-                      leave: false
+                      leave: true
                     )
                     {
                       success

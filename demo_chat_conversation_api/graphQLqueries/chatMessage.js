@@ -1,3 +1,4 @@
+// The crypto package is included with Node.js.
 const crypto = require("crypto")
 
 class ChatMessage {
