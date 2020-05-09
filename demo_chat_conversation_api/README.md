@@ -20,7 +20,6 @@ The script requires `npm install` of the "[ws](https://github.com/websockets/ws)
  * [Queries](https://zendesk.github.io/conversations-api/query.doc.html)
      * agents
      * departments
-
  * [Mutations](https://zendesk.github.io/conversations-api/mutation.doc.html)
      * startAgentSession
      * inviteAgent
@@ -34,7 +33,8 @@ The script requires `npm install` of the "[ws](https://github.com/websockets/ws)
     * "get agents" - retrieves list of chat agents
     * "what ice cream flavor" - demos 'quick replies' [structured message](https://support.zendesk.com/hc/en-us/articles/360022184394#topic_vgt_z1s_jgb)
     * "button me" - demos 'button template' structured message
-    * "invite agent" - invites another agent to existing chat
+    * "invite agent" - invites/transfers another agent to existing chat
+    * "invite but listen" - invites/transfers another agent to existing chat but remains listening
     * "transfer" - transfers existing chat to a department
 
 ### Disclaimer
