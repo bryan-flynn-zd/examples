@@ -23,6 +23,7 @@ The script requires `npm install` of the "[ws](https://github.com/websockets/ws)
  * [Mutations](https://zendesk.github.io/conversations-api/mutation.doc.html)
      * startAgentSession
      * inviteAgent
+     * listenVisitorChannel
      * sendMessage
      * sendButtonTemplate
      * sendQuickReplies
