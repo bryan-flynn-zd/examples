@@ -29,6 +29,16 @@ class SubscriptionMessage extends ChatMessage {
                               email
                               current_tags
                             }
+                            logs {
+                              edges {
+                                node {
+                                  ... on Message {
+                                    id
+                                    content
+                                  }
+                                }
+                              }
+                            }
                           }
                         }
                         from {
