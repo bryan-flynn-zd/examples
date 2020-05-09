@@ -283,7 +283,7 @@ function connectWebSocket(websocket_url) {
             )
           inviteAgent.sendMessage()
             .catch(error => console.log('[inviteAgent] Error transferring to agent'))
-        break
+          break
 
         case 'invite but listen':
           /********************************************
@@ -312,7 +312,7 @@ function connectWebSocket(websocket_url) {
               return listenToChannel.sendMessage()
             })
             .catch(error => console.log('[inviteAgent] Error transferring and listening to agent'))
-        break
+          break
 
         case 'transfer':
           let getDeparments = new QueryDepartments(webSocket, messageMap)
@@ -364,7 +364,7 @@ function connectWebSocket(websocket_url) {
               failedToTransferMessage.sendMessage()
             }
           })
-        break
+          break
       }
     }
   }
