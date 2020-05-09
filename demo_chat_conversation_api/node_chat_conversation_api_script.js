@@ -290,8 +290,7 @@ function connectWebSocket(websocket_url) {
            * Transfer to agent but continue to listen *
            ********************************************/
 
-          // NOTE: Agent ID here is hardcoded for demo purposes. Also note that this
-          // is a Chat channel user ID, *not* a Zendesk Support /api/v2/users.json id.
+          // FIRST, transfer channel to another agent.
           let inviteAgentButListen = 
             new MutationInviteAgent(
               webSocket,
@@ -303,7 +302,7 @@ function connectWebSocket(websocket_url) {
           inviteAgentButListen.sendMessage()
             .then((success) => {
 
-              // After inviting and transfering to the other agent, continue to listen to channel.
+              // THEN continue to listen to channel.
               let listenToChannel = 
                 new MutationListenVisitorChannel(
                   webSocket,
