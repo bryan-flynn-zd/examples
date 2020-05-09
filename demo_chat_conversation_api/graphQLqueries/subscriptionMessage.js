@@ -38,6 +38,8 @@ class SubscriptionMessage extends ChatMessage {
                             current_tags
                           }
                         }
+                        sender_name
+                        timestamp
                       }
                     }
                   }`

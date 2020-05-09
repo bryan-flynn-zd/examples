@@ -15,12 +15,24 @@ class MutationUpdateAgentStatus extends ChatMessage {
                     updateAgentStatus(status: ONLINE) {
                       node {
                         id
+                        display_name
                       }
                     }
                   }`
         }
       }
 
+  }
+
+  // Override base class method. Return agent's ID.
+  messageSucceeded(data) {
+    console.log(`[${this.name}] Success. Message ID: ${this.id}. Message payload: ${JSON.stringify(data)}`)
+    const agent = {
+      id: data.payload.data.updateAgentStatus.node.id,
+      name: data.payload.data.updateAgentStatus.node.display_name
+    }
+    this.promiseResolve(agent)
+    this.messageMap.delete(this.id)
   }
 }
 

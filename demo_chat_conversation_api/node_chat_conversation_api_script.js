@@ -42,20 +42,21 @@ const MutationSendQuickReplies = require('./graphQLqueries/mutationSendQuickRepl
 const MutationSendButtonTemplate = require('./graphQLqueries/mutationSendButtonTemplate')
 const MutationInviteAgent = require('./graphQLqueries/mutationInviteAgent')
 const MutationTransferToDepartment = require('./graphQLqueries/mutationTransferToDepartment')
+const MutationListenVisitorChannel = require('./graphQLqueries/mutationListenVisitorChannel')
 const QueryDepartments = require('./graphQLqueries/queryDepartments')
 const QueryAgents = require('./graphQLqueries/queryAgents')
 
 const CHAT_API_URL = 'https://chat-api.zopim.com/graphql/request'
 const SUBSCRIPTION_DATA_SIGNAL = 'DATA'
 const TYPE = {
-  VISITOR: 'Visitor'
+  VISITOR: 'Visitor',
+  AGENT: 'Agent'
 }
 
 // Globals
-let messageSubscriptionId
-let chatActivityId
+let messageSubscriptionId = null
+let chatActivityId = null
 let messageMap = new Map()
-
 
 async function generateNewAgentSession(access_token) {
   const query = `mutation($access_token: String!) {
@@ -135,7 +136,9 @@ function connectWebSocket(websocket_url) {
      * Update agent status to ONLINE *
      *********************************/
     let updateAgentStatus = new MutationUpdateAgentStatus(webSocket, messageMap)
-    updateAgentStatus.sendMessage()
+    updateAgentStatus.sendMessage().then((agentInfo) => {
+      console.log(`[updateAgentStatus] agent ID: ${agentInfo.id} agent name: ${agentInfo.name}`)
+    })
 
     /********************************************************
      * Message subscription -- listen for incoming messages *
@@ -165,7 +168,7 @@ function connectWebSocket(websocket_url) {
   function handleMessage(message) {
     const data = JSON.parse(message)
 
-    // console.log("data handleMessage:", message)
+    // console.log("debug - handleMessage data:", message)
 
     if (data.sig === "EOS") {
       console.log('[data] Received EOS signal. Starting a new agent session.')
@@ -211,6 +214,7 @@ function connectWebSocket(websocket_url) {
           let replyBackToVisitor = 
             new MutationSendMessage(webSocket, messageMap, chatMessage.channel.id, chatMessage.content)
           replyBackToVisitor.sendMessage()
+            .catch(error => console.log('[sendMessage] Error sending message. Perhaps in listen-only mode.'))
           break
 
         case 'send ordered':
@@ -224,11 +228,11 @@ function connectWebSocket(websocket_url) {
 
           sendMessagesinOrder.sendMessage()
             .then((success) => {
-              (new MutationSendMessage(webSocket, messageMap, chatMessage.channel.id, "Message 2")).sendMessage()
+              return (new MutationSendMessage(webSocket, messageMap, chatMessage.channel.id, "Message 2")).sendMessage()
                 .then((success) => {
-                  (new MutationSendMessage(webSocket, messageMap, chatMessage.channel.id, "Message 3")).sendMessage()
+                  return (new MutationSendMessage(webSocket, messageMap, chatMessage.channel.id, "Message 3")).sendMessage()
                     .then((success) => {
-                      (new MutationSendMessage(webSocket, messageMap, chatMessage.channel.id, "Message 4")).sendMessage()
+                      return (new MutationSendMessage(webSocket, messageMap, chatMessage.channel.id, "Message 4")).sendMessage()
                     })
                 })
             })
@@ -251,6 +255,7 @@ function connectWebSocket(websocket_url) {
            ****************************************************/
           let sendQuickReplies = new MutationSendQuickReplies(webSocket, messageMap, chatMessage.channel.id)
           sendQuickReplies.sendMessage()
+            .catch(error => console.log('[sendMessage] Error sending message. Perhaps in listen-only mode.'))
           break
 
         case 'button me':
@@ -259,6 +264,7 @@ function connectWebSocket(websocket_url) {
            ******************************************************/
           let sendButtonTemplate = new MutationSendButtonTemplate(webSocket, messageMap, chatMessage.channel.id)
           sendButtonTemplate.sendMessage()
+            .catch(error => console.log('[sendMessage] Error sending message. Perhaps in listen-only mode.'))
           break
 
         case 'invite agent':
@@ -277,6 +283,36 @@ function connectWebSocket(websocket_url) {
             )
           inviteAgent.sendMessage()
             .catch(error => console.log('[inviteAgent] Error transferring to agent'))
+        break
+
+        case 'invite but listen':
+          /********************************************
+           * Transfer to agent but continue to listen *
+           ********************************************/
+
+          // NOTE: Agent ID here is hardcoded for demo purposes. Also note that this
+          // is a Chat channel user ID, *not* a Zendesk Support /api/v2/users.json id.
+          let inviteAgentButListen = 
+            new MutationInviteAgent(
+              webSocket,
+              messageMap,
+              chatMessage.channel.id,
+              'W1sibG9jYWxJZCIsIjkxNzEyODI5ODgiXSxbInR5cGUiLCJBR0VOVCJdXQ=='
+            )
+
+          inviteAgentButListen.sendMessage()
+            .then((success) => {
+
+              // After inviting and transfering to the other agent, continue to listen to channel.
+              let listenToChannel = 
+                new MutationListenVisitorChannel(
+                  webSocket,
+                  messageMap,
+                  chatMessage.channel.id
+                )
+              return listenToChannel.sendMessage()
+            })
+            .catch(error => console.log('[inviteAgent] Error transferring and listening to agent'))
         break
 
         case 'transfer':
