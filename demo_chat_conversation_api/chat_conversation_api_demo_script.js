@@ -171,9 +171,16 @@ function connectWebSocket(websocket_url) {
     // console.log("debug - handleMessage data:", message)
 
     if (data.sig === "EOS") {
-      console.log('[data] Received EOS signal. Starting a new agent session.')
+      console.warn(`[data] Received EOS signal. Reason: ${data.reason}`)
       cleanup()
-      startAgentSession()
+
+      if (data.reason === 'concurrent session limit reached') {
+        console.error('[data] Exiting script. Check for another running process using same agent authentication.')
+        process.exit(1)
+      } else {
+        console.log('[data] Starting new agent session.')
+        startAgentSession()
+      }
     }
 
     // Log people coming and going from channel.
