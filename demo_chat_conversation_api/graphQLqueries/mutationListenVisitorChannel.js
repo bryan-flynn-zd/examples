@@ -14,8 +14,7 @@ class MutationListenVisitorChannel extends ChatMessage {
           query: `mutation { 
                     listenVisitorChannel(
                       channel_id: "${channelID}"
-                    ) 
-                    {
+                    ) {
                       success
                     }
                   }`

@@ -16,8 +16,8 @@ The Chat Conversations API requires a Zendesk Enterprise subscription level.
 1. Install [Node.js 10.x](https://nodejs.org/en/download/) or later. See [Installing Node.js](https://develop.zendesk.com/hc/en-us/articles/360001069167) for one approach on setting up Node.
 2. The script requires `npm install` of the "[ws](https://github.com/websockets/ws)" and "[superagent](https://github.com/visionmedia/superagent)" packages. Read the comments at the top of the script for more information.
 3. Create a Zendesk Chat OAuth access token with 'read', 'write', and 'chat' scope. See:
- * [Chat API OAuth Authentication](https://developer.zendesk.com/rest_api/docs/chat/auth)
- * [Chat API tutorial: Generating an OAuth token](https://support.zendesk.com/hc/en-us/articles/115010760808)
+    * [Chat API OAuth Authentication](https://developer.zendesk.com/rest_api/docs/chat/auth)
+    * [Chat API tutorial: Generating an OAuth token](https://support.zendesk.com/hc/en-us/articles/115010760808)
 4. In terminal, run `export CHATAPITOKEN={your_chat_token}`
 5. Run script in your terminal window using `node chat_conversation_api_demo_script.js`
 
@@ -29,21 +29,21 @@ Review the GraphQL queries of the different message types and modify to fit your
 * Creating authenticated socket connection
 * Keep [socket alive](https://develop.zendesk.com/hc/en-us/articles/360001331787#end-of-service-signal) using "PING" message
 * [Graph QL Operations](https://graphql.org/learn/queries/#operation-name) demonstrated:
- * [Subscriptions](https://zendesk.github.io/conversations-api/subscription.doc.html)
-     * message
-     * chatActivity
- * [Queries](https://zendesk.github.io/conversations-api/query.doc.html)
-     * agents
-     * departments
- * [Mutations](https://zendesk.github.io/conversations-api/mutation.doc.html)
-     * startAgentSession
-     * inviteAgent
-     * listenVisitorChannel
-     * sendMessage
-     * sendButtonTemplate
-     * sendQuickReplies
-     * transferToDepartment
-     * updateAgentStatus
+   * [Subscriptions](https://zendesk.github.io/conversations-api/subscription.doc.html)
+        * message
+        * chatActivity
+   * [Queries](https://zendesk.github.io/conversations-api/query.doc.html)
+        * agents
+        * departments
+   * [Mutations](https://zendesk.github.io/conversations-api/mutation.doc.html)
+        * startAgentSession
+        * inviteAgent
+        * listenVisitorChannel
+        * sendMessage
+        * sendButtonTemplate
+        * sendQuickReplies
+        * transferToDepartment
+        * updateAgentStatus
 * Text "commands" visitor can enter that trigger and demonstrate different API actions. See code for implementation details.
     * "send ordered" - demos sending a series of ordered messages
     * "get agents" - retrieves list of chat agents

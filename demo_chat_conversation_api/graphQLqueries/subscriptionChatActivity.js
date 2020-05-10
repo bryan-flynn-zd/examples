@@ -12,8 +12,7 @@ class SubscriptionChatActivity extends ChatMessage {
         type: "request",
         payload: {
           query: `subscription {
-                    chatActivity (filter:{chat_activity_types: [MEMBER_LEAVE, MEMBER_JOIN]})  
-                    {
+                    chatActivity (filter:{chat_activity_types: [MEMBER_LEAVE, MEMBER_JOIN]}) {
                       node {
                         __typename
                         ... on MemberJoinLog {

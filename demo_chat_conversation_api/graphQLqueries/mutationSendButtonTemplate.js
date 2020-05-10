@@ -36,8 +36,7 @@ class MutationSendButtonTemplate extends ChatMessage {
                             "Button2"
                         ]
                       }
-                    )
-                    {
+                    ) {
                       success
                     }
                   }`

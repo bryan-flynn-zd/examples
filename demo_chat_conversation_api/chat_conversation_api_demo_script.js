@@ -249,10 +249,10 @@ function connectWebSocket(websocket_url) {
           /***************************
            * Get list of chat agents *
            ***************************/
-          let queryAgents = new QueryAgents(webSocket, messageMap)
-          queryAgents.sendMessage()
-            .then((results) => {
-              console.table(results)
+          let getAgentList = new QueryAgents(webSocket, messageMap)
+          getAgentList.sendMessage()
+            .then((agents) => {
+              console.table(agents)
             })
           break
 
@@ -322,8 +322,8 @@ function connectWebSocket(websocket_url) {
           break
 
         case 'transfer':
-          let getDeparments = new QueryDepartments(webSocket, messageMap)
-          getDeparments.sendMessage().then((departments) => {
+          let getDeparmentList = new QueryDepartments(webSocket, messageMap)
+          getDeparmentList.sendMessage().then((departments) => {
 
             console.table(departments)
 

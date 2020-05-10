@@ -39,7 +39,7 @@ class ChatMessage {
   }
 
   messageFailed(data) {
-    console.log(`[${this.name}] Fail. Message ID: ${this.id}. Errors: ${JSON.stringify(data)}`)
+    console.error(`[${this.name}] Fail. Message ID: ${this.id}. Errors: ${JSON.stringify(data)}`)
     this.promiseRejected(this.id)
     this.messageMap.delete(this.id)
   }

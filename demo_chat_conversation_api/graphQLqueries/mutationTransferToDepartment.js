@@ -16,8 +16,7 @@ class MutationTransferToDepartment extends ChatMessage {
                       channel_id: "${channelID}", 
                       department_id: "${departmentID}"
                       leave: true
-                    ) 
-                    {
+                    ) {
                       success
                     }
                   }`

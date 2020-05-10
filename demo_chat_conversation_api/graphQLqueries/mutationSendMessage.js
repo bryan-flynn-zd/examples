@@ -15,8 +15,7 @@ class MutationSendMessage extends ChatMessage {
                     sendMessage(
                       channel_id: "${channelID}", 
                       msg: "${message}"
-                    ) 
-                    {
+                    ) {
                       success
                     }
                   }`

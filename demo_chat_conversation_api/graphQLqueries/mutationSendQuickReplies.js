@@ -57,8 +57,7 @@ class MutationSendQuickReplies extends ChatMessage {
                             "Salted caramel"
                         ]
                       }
-                    )
-                    {
+                    ) {
                       success
                     }
                   }`
