@@ -6,6 +6,7 @@ class MutationSendButtonTemplate extends ChatMessage {
 
     super(webSocket, messageMap, 'sendButtonTemplate')
 
+    // NOTE: You can have at most three buttons.
     this.graphQlMessage = 
       {
         id: this.id,
@@ -27,13 +28,20 @@ class MutationSendButtonTemplate extends ChatMessage {
                             type: QUICK_REPLY_ACTION, value: "B2"
                           },
                           text: "Button2"
+                        },
+                        { 
+                          action: {
+                            type: QUICK_REPLY_ACTION, value: "B3"
+                          },
+                          text: "Button3"
                         }
                       ],
                       fallback: {
                         msg: "We have the following options. Which one is your favorite?"
                         options: [
                             "Button1",
-                            "Button2"
+                            "Button2",
+                            "Button3"
                         ]
                       }
                     ) {
