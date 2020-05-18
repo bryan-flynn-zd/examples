@@ -45,6 +45,7 @@ const MutationTransferToDepartment = require('./graphQLqueries/mutationTransferT
 const MutationListenVisitorChannel = require('./graphQLqueries/mutationListenVisitorChannel')
 const QueryDepartments = require('./graphQLqueries/queryDepartments')
 const QueryAgents = require('./graphQLqueries/queryAgents')
+const QueryChannels = require('./graphQLqueries/queryChannels')
 
 const CHAT_API_URL = 'https://chat-api.zopim.com/graphql/request'
 const SUBSCRIPTION_DATA_SIGNAL = 'DATA'
@@ -253,6 +254,17 @@ function connectWebSocket(websocket_url) {
           getAgentList.sendMessage()
             .then((agents) => {
               console.table(agents)
+            })
+          break
+
+        case 'get channels':
+          /***************************
+           * Get list of chat agents *
+           ***************************/
+          let getChannelList = new QueryChannels(webSocket, messageMap)
+          getChannelList.sendMessage()
+            .then((channels) => {
+              console.table(channels)
             })
           break
 
