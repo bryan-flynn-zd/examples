@@ -28,6 +28,7 @@ class SubscriptionMessage extends ChatMessage {
                               display_name
                               email
                               current_tags
+                              raw_id
                             }
                             logs {
                               edges {
