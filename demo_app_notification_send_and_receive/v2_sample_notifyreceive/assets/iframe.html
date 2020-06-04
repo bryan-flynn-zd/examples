@@ -37,7 +37,7 @@
     }
 
     // This creates a listener for the event 'notification.my_custom_notify_event_name'
-    client.on('notification.my_custom_notify_event_name', (data) => handleNotification(data));
+    client.on('notification.my_custom_notify_event_name', handleNotification);
 
   </script>
 </body>

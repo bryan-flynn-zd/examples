@@ -58,8 +58,10 @@
 
     // Set up the button click event after the form loads.
     $(document).ready(function(){
-      $("#sendNotify").click(() => sendNotification());
-    });
+      $("#sendNotify").on("click", function(){
+        sendNotification();
+      });
+    });     
 
   </script>
 </body>
