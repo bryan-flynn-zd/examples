@@ -27,8 +27,10 @@ class SubscriptionMessage extends ChatMessage {
                               external_id
                               display_name
                               email
+                              phone
                               current_tags
                               raw_id
+                              status
                             }
                             logs {
                               edges {
