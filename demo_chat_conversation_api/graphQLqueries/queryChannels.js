@@ -16,6 +16,15 @@ class QueryChannels extends ChatMessage {
                       edges {
                         node {
                           id
+                          agents {
+                            edges {
+                              node {
+                                id
+                                status
+                                display_name
+                              }
+                            }
+                          }
                         }
                       }
                     }

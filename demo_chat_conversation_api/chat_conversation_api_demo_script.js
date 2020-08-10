@@ -169,7 +169,7 @@ function connectWebSocket(websocket_url) {
   function handleMessage(message) {
     const data = JSON.parse(message)
 
-    // console.log("debug - handleMessage data:", message)
+    console.log("debug - handleMessage data:", message)
 
     if (data.sig === "EOS") {
       console.warn(`[data] Received EOS signal. Reason: ${data.reason}`)
@@ -258,13 +258,14 @@ function connectWebSocket(websocket_url) {
           break
 
         case 'get channels':
-          /***************************
-           * Get list of chat agents *
-           ***************************/
+          /*****************************
+           * Get list of chat channels *
+           *****************************/
           let getChannelList = new QueryChannels(webSocket, messageMap)
           getChannelList.sendMessage()
             .then((channels) => {
-              console.table(channels)
+              console.log("CHANNELS INFO:")
+              console.log(JSON.stringify(channels))
             })
           break
 
@@ -298,7 +299,7 @@ function connectWebSocket(websocket_url) {
               webSocket,
               messageMap,
               chatMessage.channel.id,
-              'W1sibG9jYWxJZCIsIjkxNzEyODI5ODgiXSxbInR5cGUiLCJBR0VOVCJdXQ=='
+              'W1sibG9jYWxJZCIsIjY3MTcxNzQ4ODgiXSxbInR5cGUiLCJBR0VOVCJdXQ=='
             )
           inviteAgent.sendMessage()
             .catch(error => console.log('[inviteAgent] Error transferring to agent'))
