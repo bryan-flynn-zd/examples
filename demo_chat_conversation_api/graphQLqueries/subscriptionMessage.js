@@ -21,6 +21,11 @@ class SubscriptionMessage extends ChatMessage {
                           ... on VisitorChannel {
                             ip
                             user_agent
+                            department {
+                              id
+                              name
+                              status
+                            }
                             visitor {
                               current_country
                               current_region

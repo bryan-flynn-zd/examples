@@ -56,3 +56,7 @@ Review the GraphQL queries of the different message types and modify to fit your
 ### Disclaimer
 
 This code is only for demo purposes. This code is not guaranteed to work and is not supported by Zendesk. If the approach is of interest, additional error handling should be considered.
+
+### Future direction
+
+If considering future chatbot work, Zendesk's Sunshine Conversations should be reviewed. See [Sunshine Conversations: Announcing the Bot Partner Program](https://support.zendesk.com/hc/en-us/articles/360049946634-Sunshine-Conversations-Announcing-the-Bot-Partner-Program-)
