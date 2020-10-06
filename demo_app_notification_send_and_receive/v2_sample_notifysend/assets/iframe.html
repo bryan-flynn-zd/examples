@@ -2,7 +2,10 @@
 <head>
   <meta charset="utf-8">
   <!-- See http://garden.zendesk.com for details on Zendesk Garden CSS styles. -->
-  <link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/1/zendesk_garden.css" type="text/css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@zendeskgarden/css-bedrock@7/dist/index.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@zendeskgarden/css-utilities@4/dist/index.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@zendeskgarden/css-buttons@7/dist/index.min.css">
+
   <!-- Going to use JQuery to handle form events and updates. -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
@@ -11,9 +14,9 @@
   These style classes were taken from the Bedrock and CSS sections at
   http://garden.zendesk.com
   -->
-  <h2 class="u-gamma u-light">
+  <p class="u-regular">
   Send a notification and associated data to another app.
-  </h2>
+  </p>
   <br/>
   <button id="sendNotify" class="c-btn c-btn--small c-btn--pill c-btn--primary">Send</button>
 
