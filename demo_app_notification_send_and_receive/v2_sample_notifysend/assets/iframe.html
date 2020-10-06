@@ -41,10 +41,10 @@
         data: JSON.stringify({
           // app_id: The other app's ID.
           // See https://<yoursubdomain>.zendesk.com/api/v2/apps.json for all app IDs.
-          app_id: 129581,
+          app_id: 279003,
           // event: Used by receiving app to identify event. Notify event listeners are
           // prefixed with 'notifiation.' -- example from the app receiver side:
-          // client.on('notification.my_custom_notify_event_name', (data) => handleNotification(data));
+          // client.on('api_notification.my_custom_notify_event_name', (data) => handleNotification(data));
           event: 'my_custom_notify_event_name',
           // body: Put whatever JSON object you want here.
           body: {my_notificaiton_id: 12345, my_notification_msg: 'Date is currently: ' + Date()},

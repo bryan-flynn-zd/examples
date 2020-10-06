@@ -1,5 +1,6 @@
 {
   "app": {
+    "name":"App Notification Example - Receive",
     "short_description": "Demo of how to *receive* a notification event.",
     "long_description": "This is a very simple sample that demonstrates  \nhow to set up a listener for a Notify.json REST API call event.",
     "installation_instructions": "Simply click Install."
