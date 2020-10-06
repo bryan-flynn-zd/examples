@@ -36,7 +36,7 @@
       $("#messageOutput").text(JSON.stringify(event));
     }
 
-    // This creates a listener for the event 'notification.my_custom_notify_event_name'
+    // This creates a listener for the event 'api_notification.my_custom_notify_event_name'
     client.on('api_notification.my_custom_notify_event_name', (data) => handleNotification(data));
 
   </script>
