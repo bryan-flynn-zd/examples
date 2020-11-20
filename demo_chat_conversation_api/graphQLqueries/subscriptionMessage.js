@@ -52,9 +52,6 @@ class SubscriptionMessage extends ChatMessage {
                         from {
                           __typename
                           display_name
-                          ... on Visitor {
-                            current_tags
-                          }
                         }
                         sender_name
                         timestamp
