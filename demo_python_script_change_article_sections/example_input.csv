@@ -1,0 +1,4 @@
+article_url, new_section_id, additional_labels
+https://your_subdomain.zendesk.com/hc/en-us/articles/360005727130,360012218210,
+https://your_subdomain.zendesk.com/hc/en-us/articles/360005727135,360012218215, label1
+https://your_subdomain.zendesk.com/hc/en-us/articles/360005727140,360012218220,  label2 label3
