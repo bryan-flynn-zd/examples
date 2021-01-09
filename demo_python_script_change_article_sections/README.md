@@ -25,7 +25,9 @@ See example_input.csv.
 ## 2. Use --dryrun option first
 This validates the format and content of the CSV. Any issues are output to the console window.
 
-For any article or section that does not exist, an error will be output to the console.
+For any article, section, or label that does not have the expected format (ex: numeric value for section ID), an error is output to the console.
+
+For any article or section that does not exist in the given subdomain's Support instance, an error is output to the console.
 
 Values are only checked; no article attributes are changed.
 
