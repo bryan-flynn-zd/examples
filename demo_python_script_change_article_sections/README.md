@@ -14,7 +14,7 @@ Subdomain is needed (see `--subdomain` option).
 
 Columns need to be in this order:
 
-`article_url`  Example: https://your\_subdomain.zendesk.com/hc/en-us/articles/360005727130. The exact prefix of "https://your_subdomain.zendesk.com/hc/en-us/articles/" before the article ID is expected.
+`article_url`  Example: https://your_subdomain.zendesk.com/hc/en-us/articles/360005727130. The exact prefix of "https://your_subdomain.zendesk.com/hc/en-us/articles/" before the article ID is expected.
 
 `new_section_id`  
 
