@@ -35,7 +35,7 @@ Values are only checked; no article attributes are changed.
 
 This is the option that changes article section IDs.
 
-Optionally, any space separated labels listed in the CSV are applied to the given article.
+Optionally, any space separated labels listed in the input CSV are applied to the given article.
 
 
 ### Example input CSV:
@@ -51,7 +51,7 @@ All errors are output to the console.
 
 All successful section changes are output to a CSV named `output_{current_time}.csv`
 
-Output consists of previous values and new values for each article.
+Output CSV contains previous values and new section ID and label values for each article.
 ```
 article_url,old_section_id,new_section_id,old_label_set,new_label_set
 https://your_subdomain.zendesk.com/hc/en-us/articles/360005727130-Cherry-Apple,1111111111,360012218210,,
