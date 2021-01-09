@@ -31,12 +31,17 @@ For any article or section that does not exist in the given subdomain's Support 
 
 Values are only checked; no article attributes are changed.
 
+Example: `python3 change_article_section.py -i input.csv -s mysubdoamin -u john@zendesk.com:myPassw0rd --dryrun`
+
+_Note_: If neither --dryrun or --move is specified, input CSV format is still checked (but the check for existence of articles and sections is not done against the subdomain).
+
 ## 3. Use --move to make actual changes
 
 This is the option that changes article section IDs.
 
 Optionally, any space separated labels listed in the input CSV are applied to the given article.
 
+Example: `python3 change_article_section.py -i input.csv -s mysubdoamin -u john@zendesk.com:myPassw0rd --move`
 
 ### Example input CSV:
 ```
