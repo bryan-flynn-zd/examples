@@ -103,12 +103,12 @@ def do_dry_run(input_file, subdomain, username, password):
       for row in csv_reader:
         row_number = row_number + 1
 
-        # EXPECTED, that URL is the "UI" URL, *not* the "API URL", so convert it.
+        # EXPECTED, that input article URL is the "UI" URL, *not* the "API URL", so convert it:
         article_url = row[0].replace('/hc/en-us/', '/api/v2/help_center/')
         new_section = row[1]
         new_labels = row[2].split()
 
-        # Read URL - does it exist in instance?
+        # GET article URL - does it exist in instance?
         req = Request('GET', article_url, headers={'content-type': 'application/json'}, auth=(username, password))
         prepped = req.prepare()
         resp = s.send(prepped)
@@ -118,11 +118,13 @@ def do_dry_run(input_file, subdomain, username, password):
           # Output warning that article's old seciton ID is same as new section ID
           json_data = json.loads(resp.text)
           article_section_id = json_data["article"]["section_id"]
-          if article_section_id == new_section:
-            print(f'Error: Article existing section_id same as new section id. Article: {article_url} Section: {new_section}.')
+          if article_section_id == int(new_section):
+            # Having the same source and target section ID won't halt a move operation; the
+            # section will still be "changed". It's something to maybe check out if 
+            # it happens a lot, however.
+            print(f"Warning: article's existing section_id same as new section_id. Article: {article_url}, Section: {new_section}.")
 
         if not (new_section in sections_checked):
-
           # Read section number - does it exist in instance?
           section_url = f'https://{subdomain}.zendesk.com/api/v2/help_center/sections/{new_section}'
           req = Request('GET', section_url, headers={'content-type': 'application/json'}, auth=(username, password))
@@ -133,7 +135,7 @@ def do_dry_run(input_file, subdomain, username, password):
           else:
             print(f'Error: status code {resp.status_code} getting section {section_url}.')
 
-        # TODO: Avoid 429s
+        # TODO: Avoid 429s? Not sure if this is needed.
 
         print(dots)
         dots = dots + '.'
@@ -178,7 +180,7 @@ def do_move(input_file, subdomain, username, password):
         prepped = req.prepare()
         resp = s.send(prepped)
         if resp.status_code != 200:
-          print(f'Error: Getting labels. Status code {resp.status_code} getting {label_url}.')
+          print(f'Error: getting labels. Status code {resp.status_code} getting {label_url}.')
           print(resp.text)
           return
         else:
@@ -205,16 +207,25 @@ def do_move(input_file, subdomain, username, password):
         # Article labels can be updated using undocumented API.
         #   Convert https://z3n3395.zendesk.com/api/v2/help_center/articles/360005727134
         #     ...to https://z3n3395.zendesk.com/knowledge/api/articles/360005727134
-        # ...and convert to "label update" URL by changing the middle part.
+        #     Convert to "label update" URL by changing the middle part of endpoint.
+        # TODO: See if the documented HC article label API can do the same operation. It
+        #       looks like that one is a "one label at a time" API.
         label_url = article_url.replace('/api/v2/help_center/', '/knowledge/api/')
+        # Strip off any text at end of URL.
+        label_url_regex = re.compile(f'^https?://{args.subdomain[0]}.zendesk.com/knowledge/api/articles/[0-9]+')
+        match = label_url_regex.match(label_url)
+        if match:
+          label_url = match.group()
+        else:
+          print(f'Error: forming label GET URL. {label_url}. Should never happen.')
 
-        # Get existing labels.
+        # Get article's existing labels.
         existing_labels_for_csv = ''
         req = Request('GET', f'{label_url}?fields=labels', headers={'content-type': 'application/json'}, auth=(username, password))
         prepped = req.prepare()
         resp = s.send(prepped)
         if resp.status_code != 200:
-          print(f'Error: Getting labels. Status code {resp.status_code} getting {label_url}.')
+          print(f'Error: getting labels. Status code {resp.status_code} getting {label_url}.')
           print(resp.text)
           return
         else:
@@ -225,6 +236,7 @@ def do_move(input_file, subdomain, username, password):
           labels_set = labels_set.union(new_labels)
           # Convert 'set' to 'array' that will be used in final update call.
           new_labels = list(labels_set)
+          # Create space separated list of labels.
           new_labels_for_csv = ' '.join(new_labels)
 
         # Update article labels.
@@ -233,7 +245,7 @@ def do_move(input_file, subdomain, username, password):
         prepped = req.prepare()
         resp = s.send(prepped)
         if resp.status_code != 200:
-          print(f'Error: Updating labels {new_labels}. Status code {resp.status_code} updating {label_url}.')
+          print(f'Error: updating labels {new_labels}. Status code {resp.status_code} updating {label_url}.')
           print(resp.text)
           return
 
@@ -242,7 +254,8 @@ def do_move(input_file, subdomain, username, password):
 
         writer.writerow([original_article_url, existing_section_id, new_section, existing_labels_for_csv, new_labels_for_csv])
 
-        # TODO: Avoid 429s
+        # TODO: Avoid 429s? Not sure if this is needed.
+
       print(f'Move: successful. See output file {output_file_name} for details.')
 
 
